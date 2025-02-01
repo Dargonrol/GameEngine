@@ -1,0 +1,15 @@
+# Directories
+.vs/
+bin/
+
+# Files
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.filters
+*.sln
+*.log
+Makefile
+Setup-Windows_TEMP.bat
+
+# Exclude
+!Vendor/Binaries
