@@ -14,7 +14,7 @@ project (AppName)
 	  -- Include Core
 	  ("../" .. CoreName .. "/src"),
 	  -- additional libs
-	  ("../" .. AppName .. "/Vendor/includes/spdlog/include")
+	  ("../" .. AppName .. "/Vendor/spdlog/include")
    }
 
    links
