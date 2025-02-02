@@ -13,8 +13,8 @@ workspace "GameEngine"
 
 OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
+group ""
 include (CoreName .. "/Build-Engine.lua")
+group ""
 
-group "Applications"
 include (AppName .. "/Build-App.lua")
-group "Applications"
