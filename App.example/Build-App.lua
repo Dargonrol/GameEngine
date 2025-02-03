@@ -60,17 +60,20 @@ project (AppName)
    filter "configurations:Debug"
        defines { "DEBUG" }
        runtime "Debug"
+	   buildoptions "/MDd"
        symbols "On"
 
    filter "configurations:Release"
        defines { "RELEASE" }
        runtime "Release"
+	   buildoptions "/MD"
        optimize "On"
        symbols "On"
 
    filter "configurations:Dist"
        defines { "DIST" }
        runtime "Release"
+	   buildoptions "/MDd"
        optimize "On"
        symbols "Off"
 	   
