@@ -19,6 +19,8 @@ typedef struct GameData
     Ball ball;
     GameState gameState;
     Background background;
+    Music backgroundMusic;
+    float musicTimePlayed;
 } GameData;
 
 class Game

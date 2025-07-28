@@ -27,10 +27,23 @@ void Game::updateGameLogic()
     float delta = GetFrameTime();
     handleInputs(gamedata);
 
+    gamedata.musicTimePlayed = GetMusicTimePlayed(gamedata.backgroundMusic);
+    if (gamedata.musicTimePlayed >= GetMusicTimeLength(gamedata.backgroundMusic))
+    {
+        StopMusicStream(gamedata.backgroundMusic);
+        PlayMusicStream(gamedata.backgroundMusic);
+    }
+
+    UpdateMusicStream(gamedata.backgroundMusic);
+
     float ballVel = (float)GetScreenWidth() * 0.35f;
     switch (gamedata.gameState)
     {
         case GameState::RUNNING:
+            if (!IsMusicStreamPlaying(gamedata.backgroundMusic))
+            {
+                ResumeMusicStream(gamedata.backgroundMusic);
+            }
             gamedata.ball.pos.x += gamedata.ball.vel.x * ballVel * delta;
             gamedata.ball.pos.y += gamedata.ball.vel.y * ballVel * delta;
             checkBallCollision(gamedata);
@@ -42,6 +55,10 @@ void Game::updateGameLogic()
             break;
 
         case GameState::STOPPED:
+            if (IsMusicStreamPlaying(gamedata.backgroundMusic))
+            {
+                PauseMusicStream(gamedata.backgroundMusic);
+            }
             break;
 
         case GameState::START:
@@ -118,9 +135,17 @@ void Game::init()
     SetTargetFPS(TARGET_FPS);
     gamedata.gameState = GameState::START;
     gamedata.background = Background{};
+    gamedata.musicTimePlayed = 0;
+    InitAudioDevice();
+
+    gamedata.backgroundMusic = LoadMusicStream("../resources/lied30.mp3");
+    PlayMusicStream(gamedata.backgroundMusic);
+
 }
 
 void Game::shutdown()
 {
     CloseWindow();
+    UnloadMusicStream(gamedata.backgroundMusic);
+    CloseAudioDevice();
 }
