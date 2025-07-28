@@ -10,4 +10,5 @@ typedef struct Player
     std::vector<Item> items;
     Rectangle bar;
     float speed;
+    ItemType status;
 } Player;

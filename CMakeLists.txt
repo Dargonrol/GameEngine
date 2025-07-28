@@ -16,14 +16,21 @@ FetchContent_MakeAvailable(raylib)
 
 add_executable(Pong
         src/main.cpp
-        src/Game.h
-        src/Game.cpp
-        src/Graphics.cpp
-        src/Graphics.h
-        src/Player.h
-        src/Items.h
-		src/Background.cpp
-		src/Background.h
+		src/Game.h
+		src/Game.cpp
+		src/Core/Graphics/Graphics.cpp
+		src/Core/Graphics/Graphics.h
+		src/Core/Player.h
+		src/Core/Items.h
+		src/Core/Graphics/Background.cpp
+		src/Core/Graphics/Background.h
+		src/Core/Ball.h
+		src/Core/Collision.h
+		src/Core/Graphics/Draw.h
+		src/Core/Graphics/Draw.cpp
+		src/Core/Constants.h
+		src/Core/Input.h
+		src/Core/Collision.cpp
 )
 
 target_compile_definitions(

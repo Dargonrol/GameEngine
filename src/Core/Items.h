@@ -2,6 +2,7 @@
 
 enum class ItemType
 {
+    NONE = 0,
     SHIELD,
     MEDIC,
     BOOST,

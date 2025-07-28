@@ -1,8 +1,9 @@
 #pragma once
 #include <array>
 
-#include "Background.h"
-#include "Player.h"
+#include "Core/Graphics/Background.h"
+#include "Core/Ball.h"
+#include "Core/Player.h"
 
 enum class GameState
 {
@@ -15,6 +16,7 @@ enum class GameState
 typedef struct GameData
 {
     std::array<Player, 2> players;
+    Ball ball;
     GameState gameState;
     Background background;
 } GameData;
@@ -22,28 +24,27 @@ typedef struct GameData
 class Game
 {
 public:
-    Game() = default;
-
-    ~Game() = default;
+    static Game& getInstance()
+    {
+        static Game instance;
+        return instance;
+    }
 
     void run();
-
     void init();
-
     void shutdown();
 
 private:
+    Game() = default;
+    ~Game() = default;
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
+
     void updateGameLogic();
 
-    void draw();
-
-    void handleInputs(float delta);
+    void initData();
+    void resetData();
 
 private:
     GameData gamedata;
-
-    static constexpr int SCREEN_HEIGHT = 450;
-    static constexpr int SCREEN_WIDTH = 800;
-    static constexpr int TARGET_FPS = 60;
-    static constexpr float DEFAULT_SPEED = 200;
 };

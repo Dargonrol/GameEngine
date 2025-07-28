@@ -1,17 +1,23 @@
 #include "Game.h"
+#include <string>
 
-#include "Graphics.h"
 #include "raylib.h"
+#include "raymath.h"
+#include "Core/Collision.h"
+#include "Core/Constants.h"
+#include "Core/Input.h"
+#include "Core/Graphics/Draw.h"
+
+using namespace Constants;
 
 void Game::run()
 {
     while (!WindowShouldClose())
     {
-        BeginDrawing();
-
         updateGameLogic();
-        draw();
 
+        BeginDrawing();
+        draw(gamedata);
         EndDrawing();
     }
 }
@@ -19,65 +25,96 @@ void Game::run()
 void Game::updateGameLogic()
 {
     float delta = GetFrameTime();
-    float time = GetTime();
+    handleInputs(gamedata);
 
+    float ballVel = (float)GetScreenWidth() * 0.35f;
     switch (gamedata.gameState)
     {
         case GameState::RUNNING:
-            handleInputs(delta);
-            gamedata.background.draw(time);
+            gamedata.ball.pos.x += gamedata.ball.vel.x * ballVel * delta;
+            gamedata.ball.pos.y += gamedata.ball.vel.y * ballVel * delta;
+            checkBallCollision(gamedata);
             break;
 
         case GameState::RESTART:
+            resetData();
+            gamedata.gameState = GameState::RUNNING;
             break;
 
         case GameState::STOPPED:
-            gamedata.gameState = GameState::RUNNING;
             break;
 
         case GameState::START:
-            gamedata.players = {
-                Player{0, {}, Rectangle{10, (float) GetRandomValue(0, GetScreenHeight() - 50), 10, 50}, DEFAULT_SPEED},
-                Player{
-                    0, {},
-                    Rectangle{
-                        (float) GetScreenWidth() - 10 - 10, (float) GetRandomValue(0, GetScreenHeight() - 50), 10, 50
-                    },
-                    DEFAULT_SPEED
-                }
-            };
+            initData();
             gamedata.gameState = GameState::RUNNING;
             break;
     }
 }
 
-void Game::draw()
+void Game::initData()
 {
-    ClearBackground(Color{0, 0, 0, 0xFF});
-    for (Player &player: gamedata.players)
-    {
-        DrawRectangleRec(player.bar, Color{0xFF, 0xFF, 0xFF, 0xFF});
-    }
-    DrawText("Test", 20, 20, 20, Color{0xFF, 0xFF, 0xFF, 0xFF});
+    float barWidth = (float)GetScreenWidth() * 0.025f;
+    float barHeight = (float)GetScreenHeight() * 0.2f;
+    float padding = (float)GetScreenWidth() * 0.1;
+
+    gamedata.players = {
+        Player{
+            0,
+            {},
+            Rectangle{padding, (float) GetRandomValue(0, GetScreenHeight() - barHeight), barWidth, barHeight},
+            DEFAULT_SPEED
+        },
+        Player{
+            0,
+            {},
+            Rectangle{(float) GetScreenWidth() - padding - barWidth, (float) GetRandomValue(0, GetScreenHeight() - barHeight), barWidth, barHeight},
+            DEFAULT_SPEED
+        }
+    };
+    Vector2 vel = {(float)GetRandomValue(-100, 100) / 100, (float)GetRandomValue(-100, 100) / 100};
+    gamedata.ball = Ball{
+        Vector2{(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2},
+        vel / Vector2Length(vel),
+        0,
+        (int)(((float)GetScreenWidth() / (float)GetScreenHeight()) * BALL_SIZE_FACTOR),
+        false
+    };
+    gamedata.ball.directionIsLeft = gamedata.ball.vel.x < 0;
 }
 
-void Game::handleInputs(float delta)
+void Game::resetData()
 {
-    if (IsKeyDown(KEY_W)) { gamedata.players[0].bar.y -= DEFAULT_SPEED * delta; }
-    if (IsKeyDown(KEY_S)) { gamedata.players[0].bar.y += DEFAULT_SPEED * delta; }
-    if (IsKeyDown(KEY_A)) { gamedata.players[0].bar.x -= DEFAULT_SPEED * delta; }
-    if (IsKeyDown(KEY_D)) { gamedata.players[0].bar.x += DEFAULT_SPEED * delta; }
+    float barWidth = (float)GetScreenWidth() * 0.025f;
+    float barHeight = (float)GetScreenHeight() * 0.2f;
+    float padding = (float)GetScreenWidth() * 0.1;
 
-    if (IsKeyDown(KEY_UP)) { gamedata.players[1].bar.y -= DEFAULT_SPEED * delta; }
-    if (IsKeyDown(KEY_DOWN)) { gamedata.players[1].bar.y += DEFAULT_SPEED * delta; }
-    if (IsKeyDown(KEY_LEFT)) { gamedata.players[1].bar.x -= DEFAULT_SPEED * delta; }
-    if (IsKeyDown(KEY_RIGHT)) { gamedata.players[1].bar.x += DEFAULT_SPEED * delta; }
+    gamedata.players[0].items.clear();
+    gamedata.players[0].status = ItemType::NONE;
+    gamedata.players[0].bar.x = padding;
+    gamedata.players[0].bar.y = (float) GetRandomValue(0, GetScreenHeight() - barHeight);
+    gamedata.players[0].bar.height = barHeight;
+    gamedata.players[0].bar.width = barWidth;
+    gamedata.players[1].items.clear();
+    gamedata.players[1].status = ItemType::NONE;
+    gamedata.players[1].bar.x = (float) GetScreenWidth() - padding - barWidth;
+    gamedata.players[1].bar.y = (float) GetRandomValue(0, GetScreenHeight() - barHeight);
+    gamedata.players[1].bar.height = barHeight;
+    gamedata.players[1].bar.width = barWidth;
+
+    Vector2 vel = {(float)GetRandomValue(-100, 100) / 100, (float)GetRandomValue(-100, 100) / 100};
+    gamedata.ball.pos = Vector2{(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2};
+    gamedata.ball.vel = vel / Vector2Length(vel),
+    gamedata.ball.acc = 0;
+    gamedata.ball.directionIsLeft = gamedata.ball.vel.x < 0;
+    gamedata.ball.radius = (int)(((float)GetScreenWidth() / (float)GetScreenHeight()) * BALL_SIZE_FACTOR);
 }
 
 
 void Game::init()
 {
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Pong 2");
+    SetExitKey(KEY_NULL);
     SetTargetFPS(TARGET_FPS);
     gamedata.gameState = GameState::START;
     gamedata.background = Background{};
