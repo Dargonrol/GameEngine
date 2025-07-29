@@ -7,6 +7,7 @@
 #include "Core/Constants.h"
 #include "Core/Input.h"
 #include "Core/Graphics/Draw.h"
+#include "Core/Music/MusicManager.h"
 
 using namespace Constants;
 
@@ -25,25 +26,17 @@ void Game::run()
 void Game::updateGameLogic()
 {
     float delta = GetFrameTime();
+
     handleInputs(gamedata);
-
-    gamedata.musicTimePlayed = GetMusicTimePlayed(gamedata.backgroundMusic);
-    if (gamedata.musicTimePlayed >= GetMusicTimeLength(gamedata.backgroundMusic))
-    {
-        StopMusicStream(gamedata.backgroundMusic);
-        PlayMusicStream(gamedata.backgroundMusic);
-    }
-
-    UpdateMusicStream(gamedata.backgroundMusic);
+    MusicManager::getInstance().update();
 
     float ballVel = (float)GetScreenWidth() * 0.35f;
     switch (gamedata.gameState)
     {
         case GameState::RUNNING:
-            if (!IsMusicStreamPlaying(gamedata.backgroundMusic))
-            {
-                ResumeMusicStream(gamedata.backgroundMusic);
-            }
+            if (!MusicManager::getInstance().isMusicRunning())
+                MusicManager::getInstance().unpauseTrack();
+
             gamedata.ball.pos.x += gamedata.ball.vel.x * ballVel * delta;
             gamedata.ball.pos.y += gamedata.ball.vel.y * ballVel * delta;
             checkBallCollision(gamedata);
@@ -55,10 +48,8 @@ void Game::updateGameLogic()
             break;
 
         case GameState::STOPPED:
-            if (IsMusicStreamPlaying(gamedata.backgroundMusic))
-            {
-                PauseMusicStream(gamedata.backgroundMusic);
-            }
+            if (MusicManager::getInstance().isMusicRunning())
+                MusicManager::getInstance().pauseTrack();
             break;
 
         case GameState::START:
@@ -135,17 +126,14 @@ void Game::init()
     SetTargetFPS(TARGET_FPS);
     gamedata.gameState = GameState::START;
     gamedata.background = Background{};
-    gamedata.musicTimePlayed = 0;
-    InitAudioDevice();
-
-    gamedata.backgroundMusic = LoadMusicStream("../resources/lied30.mp3");
-    PlayMusicStream(gamedata.backgroundMusic);
-
+    MusicManager::getInstance().init();
+    MusicManager::getInstance().registerTrack(std::filesystem::path("../resources/lied30.mp3"), "Track_1");
+    MusicManager::getInstance().playTrack("Track_1");
 }
 
 void Game::shutdown()
 {
     CloseWindow();
-    UnloadMusicStream(gamedata.backgroundMusic);
+    MusicManager::getInstance().shutdown();
     CloseAudioDevice();
 }

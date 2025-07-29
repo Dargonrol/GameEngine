@@ -19,8 +19,6 @@ typedef struct GameData
     Ball ball;
     GameState gameState;
     Background background;
-    Music backgroundMusic;
-    float musicTimePlayed;
 } GameData;
 
 class Game
@@ -31,6 +29,8 @@ public:
         static Game instance;
         return instance;
     }
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
 
     void run();
     void init();
@@ -39,8 +39,6 @@ public:
 private:
     Game() = default;
     ~Game() = default;
-    Game(const Game&) = delete;
-    Game& operator=(const Game&) = delete;
 
     void updateGameLogic();
 

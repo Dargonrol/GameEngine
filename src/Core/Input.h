@@ -9,8 +9,14 @@ inline void handleInputs(GameData& gamedata)
 {
     float delta = GetFrameTime();
     if (IsKeyPressed(KEY_R)) { gamedata.gameState = GameState::RESTART; }
-    if (IsKeyPressed(KEY_ENTER) && gamedata.gameState == GameState::STOPPED) { gamedata.gameState = GameState::RUNNING; }
-    if (IsKeyPressed(KEY_ESCAPE)) { gamedata.gameState = GameState::STOPPED; }
+    if ((IsKeyPressed(KEY_ENTER) && gamedata.gameState == GameState::STOPPED)) { gamedata.gameState = GameState::RUNNING; }
+    if (IsKeyPressed(KEY_ESCAPE))
+    {
+        if (gamedata.gameState == GameState::STOPPED)
+            gamedata.gameState = GameState::RUNNING;
+        else
+            gamedata.gameState = GameState::STOPPED;
+    }
 
     if (gamedata.gameState == GameState::RUNNING)
     {

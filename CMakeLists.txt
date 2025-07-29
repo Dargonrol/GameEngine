@@ -31,6 +31,8 @@ add_executable(Pong
 		src/Core/Constants.h
 		src/Core/Input.h
 		src/Core/Collision.cpp
+		src/Core/Music/MusicManager.cpp
+		src/Core/Music/MusicManager.h
 )
 
 target_compile_definitions(
