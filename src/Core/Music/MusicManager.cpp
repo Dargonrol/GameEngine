@@ -31,10 +31,16 @@ void MusicManager::update()
         UpdateMusicStream(*currentMusic);
         musicTimePlayed = GetMusicTimePlayed(*currentMusic);
 
-        if (looping && musicTimePlayed >= GetMusicTimeLength(*currentMusic))
+        if (looping && musicTimePlayed > GetMusicTimeLength(*currentMusic))
         {
             StopMusicStream(*currentMusic);
             PlayMusicStream(*currentMusic);
+        } else
+        {
+            if (musicTimePlayed > GetMusicTimeLength(*currentMusic) && IsMusicStreamPlaying(*currentMusic))
+            {
+                StopMusicStream(*currentMusic);
+            }
         }
     }
 }
@@ -73,7 +79,7 @@ void MusicManager::switchTrack(const std::string& identifier)
     currentMusic = getTrack(identifier);
 }
 
-void MusicManager::pauseTrack() const
+void MusicManager::pauseTrack()
 {
     if (!initCheck()) { return; }
     if (!IsMusicValid(*currentMusic))
@@ -82,9 +88,10 @@ void MusicManager::pauseTrack() const
         return;
     }
     PauseMusicStream(*currentMusic);
+    paused = true;
 }
 
-void MusicManager::unpauseTrack() const
+void MusicManager::unpauseTrack()
 {
     if (!initCheck()) { return; }
     if (!IsMusicValid(*currentMusic))
@@ -93,6 +100,7 @@ void MusicManager::unpauseTrack() const
         return;
     }
     ResumeMusicStream(*currentMusic);
+    paused = false;
 }
 
 void MusicManager::stopTrack() const
@@ -119,6 +127,7 @@ void MusicManager::playTrack(const std::string& identifier)
     if (!IsMusicValid(*track)) { return; }
     PlayMusicStream(*track);
     currentMusic = track;
+    paused = false;
 }
 
 void MusicManager::enableLooping(bool enabled)
@@ -133,6 +142,11 @@ bool MusicManager::isMusicRunning()
         return IsMusicStreamPlaying(*currentMusic);
     }
     return false;
+}
+
+bool MusicManager::isPaused() const
+{
+    return paused;
 }
 
 Music* MusicManager::getTrack(const std::string& identifier)

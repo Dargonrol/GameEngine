@@ -34,7 +34,7 @@ void Game::updateGameLogic()
     switch (gamedata.gameState)
     {
         case GameState::RUNNING:
-            if (!MusicManager::getInstance().isMusicRunning())
+            if (!MusicManager::getInstance().isPaused())
                 MusicManager::getInstance().unpauseTrack();
 
             gamedata.ball.pos.x += gamedata.ball.vel.x * ballVel * delta;
@@ -48,7 +48,7 @@ void Game::updateGameLogic()
             break;
 
         case GameState::STOPPED:
-            if (MusicManager::getInstance().isMusicRunning())
+            if (MusicManager::getInstance().isPaused())
                 MusicManager::getInstance().pauseTrack();
             break;
 

@@ -23,14 +23,15 @@ public:
 
     void setVolume(const std::string& identifier);
 
-    void pauseTrack() const;
-    void unpauseTrack() const;
+    void pauseTrack();
+    void unpauseTrack();
 
     void stopTrack() const;
     void playTrack(const std::string& identifier);
 
     void enableLooping(bool enabled);
     [[nodiscard]] bool isMusicRunning();
+    [[nodiscard]] bool isPaused() const;
 
 private:
     MusicManager() = default;
@@ -46,5 +47,6 @@ private:
     Music* nextMusic = nullptr;
     double musicTimePlayed = 0;
     bool looping = false;
+    bool paused = false;
     bool calledInit = false;
 };
