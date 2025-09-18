@@ -53,7 +53,7 @@ void MusicManager::registerTrack(const std::filesystem::path& path, const std::s
         TraceLog(LOG_ERROR, ("Identifier: " + identifier + " already exists!").c_str());
         return;
     }
-    registeredMusic.emplace(identifier, LoadMusicStream(path.c_str()));
+    registeredMusic.emplace(identifier, LoadMusicStream(path.generic_string().c_str()));
 }
 
 void MusicManager::unregisterTrack(const std::string& identifier)

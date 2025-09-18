@@ -1,0 +1,21 @@
+Game
+	Level
+	State Manager
+	Music Manager
+	Sound Manager
+	
+	
+	
+	
+Level
+- create level
+- add entities of any kind
+- ecs typa shit local to level
+- entities have components such as player control
+- Level contains local level stats&data such as local score.
+	callback methods on level end and start to update local score with global gamestats
+	
+StateManager
+- get current level
+- change level
+- levels get saved in map with keyword. (like music)

@@ -1,4 +1,4 @@
 #pragma once
-#include "../Game.h"
+#include "../../Game.h"
 
 void checkBallCollision(GameData& gamedata);

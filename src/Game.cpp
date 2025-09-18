@@ -3,7 +3,7 @@
 
 #include "raylib.h"
 #include "raymath.h"
-#include "Core/Collision.h"
+#include "Core/Components/Collision.h"
 #include "Core/Constants.h"
 #include "Core/Input.h"
 #include "Core/Graphics/Draw.h"

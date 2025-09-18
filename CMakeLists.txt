@@ -25,14 +25,28 @@ add_executable(Pong
 		src/Core/Graphics/Background.cpp
 		src/Core/Graphics/Background.h
 		src/Core/Ball.h
-		src/Core/Collision.h
+		src/Core/Components/Collision.h
 		src/Core/Graphics/Draw.h
 		src/Core/Graphics/Draw.cpp
 		src/Core/Constants.h
 		src/Core/Input.h
-		src/Core/Collision.cpp
+		src/Core/Components/Collision.cpp
 		src/Core/Music/MusicManager.cpp
 		src/Core/Music/MusicManager.h
+        src/Core/Level/Level.cpp
+        src/Core/Level/Level.h
+		src/Core/Entity.cpp
+		src/Core/Entity.h
+		src/Core/StateManager.cpp
+		src/Core/StateManager.h
+		src/Core/ErrorCodes.h
+		src/Core/ECS/Components.h
+		src/Core/ECS/Systems.cpp
+		src/Core/ECS/Systems.h
+		src/Core/ECS/EntityManager.cpp
+		src/Core/ECS/EntityManager.h
+		src/Core/ECS/Registry.cpp
+		src/Core/ECS/Registry.h
 )
 
 target_compile_definitions(
