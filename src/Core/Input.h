@@ -3,7 +3,7 @@
 #include "../Game.h"
 #include "Constants.h"
 
-namespace Pong
+namespace Core
 {
     using namespace Constants;
 

@@ -3,7 +3,7 @@
 #include <unordered_map>
 
 
-namespace Pong::ECS
+namespace Core::ECS
 {
     using ComponentType = size_t;
     inline ComponentType next_component_type = 0;

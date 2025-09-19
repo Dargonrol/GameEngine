@@ -1,5 +1,5 @@
 #pragma once
-namespace Pong
+namespace Core
 {
     enum ERROR
     {

@@ -2,7 +2,7 @@
 
 #include "CollisionSystem.h"
 
-namespace Pong::ECS
+namespace Core::ECS
 {
     void Systems::update(float delta)
     {

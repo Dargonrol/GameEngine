@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Collision.h"
-namespace Pong
+namespace Core
 {
     void checkBallCollision(GameData& gamedata)
     {

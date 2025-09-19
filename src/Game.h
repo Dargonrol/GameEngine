@@ -5,7 +5,7 @@
 #include "Core/Ball.h"
 #include "Core/Player.h"
 
-namespace Pong
+namespace Core
 {
     enum class GameState
     {

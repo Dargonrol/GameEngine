@@ -6,7 +6,7 @@
 
 #include "Level/Level.h"
 
-namespace Pong {
+namespace Core {
 
 class StateManager { // Singleton
 public:

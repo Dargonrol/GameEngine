@@ -4,7 +4,7 @@
 
 #include "StateManager.h"
 
-namespace Pong {
+namespace Core {
     int StateManager::register_level(Level* level, const std::string& identifier)
     {
         if (_level_map.contains(identifier)) return -1;

@@ -8,7 +8,7 @@
 #include "Components.h"
 #include "Entity.h"
 
-namespace Pong::ECS {
+namespace Core::ECS {
     using Index = size_t;
     using Signature = std::bitset<64>;
 

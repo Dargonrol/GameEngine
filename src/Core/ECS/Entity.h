@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Pong::ECS
+namespace Core::ECS
 {
     using ID = size_t;
 

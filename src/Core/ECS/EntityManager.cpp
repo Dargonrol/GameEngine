@@ -2,7 +2,7 @@
 
 #include <utility>
 
-namespace Pong::ECS {
+namespace Core::ECS {
     EntityManager::EntityManager()
     = default;
 

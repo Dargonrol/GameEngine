@@ -12,7 +12,14 @@ FetchContent_Declare(
         GIT_TAG master
 )
 
+FetchContent_Declare(
+		glm
+		GIT_REPOSITORY https://github.com/g-truc/glm
+		GIT_TAG master
+)
+
 FetchContent_MakeAvailable(raylib)
+FetchContent_MakeAvailable(glm)
 
 add_executable(Pong
         src/main.cpp
@@ -25,12 +32,12 @@ add_executable(Pong
 		src/Core/Graphics/Background.cpp
 		src/Core/Graphics/Background.h
 		src/Core/Ball.h
-		src/Core/Components/Collision.h
+        src/Core/Collision.h
 		src/Core/Graphics/Draw.h
 		src/Core/Graphics/Draw.cpp
 		src/Core/Constants.h
 		src/Core/Input.h
-		src/Core/Components/Collision.cpp
+        src/Core/Collision.cpp
 		src/Core/Music/MusicManager.cpp
 		src/Core/Music/MusicManager.h
         src/Core/Level/Level.cpp
@@ -47,11 +54,16 @@ add_executable(Pong
         src/Core/ECS/Registry.h
 		src/Core/ECS/Systems/CollisionSystem.cpp
 		src/Core/ECS/Systems/CollisionSystem.h
+		src/Core/Renderer/Renderer.h
+		src/Core/Color.h
+		src/Core/Renderer/RaylibRenderer/RaylibRenderer.cpp
+		src/Core/Renderer/RaylibRenderer/RaylibRenderer.h
+		src/Core/Renderer/RaylibRenderer/Window.h
 )
 
 target_compile_definitions(
         Pong PRIVATE WORKDIR_PATH="${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-target_link_libraries(Pong PRIVATE raylib)
+target_link_libraries(Pong PRIVATE raylib glm)
 

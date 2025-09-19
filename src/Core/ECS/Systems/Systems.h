@@ -1,7 +1,7 @@
 #pragma once
 #include "../Registry.h"
 
-namespace Pong::ECS
+namespace Core::ECS
 {
     class Systems
     {

@@ -2,7 +2,7 @@
 #include "../Constants.h"
 #include <string>
 
-namespace Pong
+namespace Core
 {
     using namespace Constants;
 

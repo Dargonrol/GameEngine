@@ -19,3 +19,7 @@ StateManager
 - get current level
 - change level
 - levels get saved in map with keyword. (like music)
+
+
+https://www.youtube.com/watch?v=y2ECgOhoDGs
+background like that. But moving. Raytracing on those pixels.

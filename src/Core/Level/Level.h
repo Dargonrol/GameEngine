@@ -6,7 +6,7 @@
 
 #include "../ECS/EntityManager.h"
 
-namespace Pong {
+namespace Core {
 
 class Level {
 public:

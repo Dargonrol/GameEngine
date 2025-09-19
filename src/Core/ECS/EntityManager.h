@@ -5,7 +5,7 @@
 #include "Entity.h"
 #include "../ErrorCodes.h"
 
-namespace Pong::ECS
+namespace Core::ECS
 {
     class EntityManager
     {

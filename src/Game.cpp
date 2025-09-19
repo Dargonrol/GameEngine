@@ -3,14 +3,14 @@
 
 #include "raylib.h"
 #include "raymath.h"
-#include "Core/Components/Collision.h"
+#include "Core/Collision.h"
 #include "Core/Constants.h"
 #include "Core/Input.h"
 #include "Core/StateManager.h"
 #include "Core/Graphics/Draw.h"
 #include "Core/Music/MusicManager.h"
 
-namespace Pong
+namespace Core
 {
     using namespace Constants;
 
