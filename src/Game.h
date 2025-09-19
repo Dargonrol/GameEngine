@@ -5,46 +5,49 @@
 #include "Core/Ball.h"
 #include "Core/Player.h"
 
-enum class GameState
+namespace Pong
 {
-    RUNNING,
-    STOPPED,
-    RESTART,
-    START
-};
-
-typedef struct GameData
-{
-    std::array<Player, 2> players;
-    Ball ball;
-    GameState gameState;
-    Background background;
-} GameData;
-
-class Game
-{
-public:
-    static Game& getInstance()
+    enum class GameState
     {
-        static Game instance;
-        return instance;
-    }
-    Game(const Game&) = delete;
-    Game& operator=(const Game&) = delete;
+        RUNNING,
+        STOPPED,
+        RESTART,
+        START
+    };
 
-    void run();
-    void init();
-    void shutdown();
+    typedef struct GameData
+    {
+        std::array<Player, 2> players;
+        Ball ball;
+        GameState gameState;
+        Background background;
+    } GameData;
 
-private:
-    Game() = default;
-    ~Game() = default;
+    class Game
+    {
+    public:
+        static Game& getInstance()
+        {
+            static Game instance;
+            return instance;
+        }
+        Game(const Game&) = delete;
+        Game& operator=(const Game&) = delete;
 
-    void updateGameLogic();
+        void run();
+        void init();
+        void shutdown();
 
-    void initData();
-    void resetData();
+    private:
+        Game() = default;
+        ~Game() = default;
 
-private:
-    GameData gamedata;
-};
+        void updateGameLogic();
+
+        void initData();
+        void resetData();
+
+    private:
+        GameData gamedata;
+    };
+}

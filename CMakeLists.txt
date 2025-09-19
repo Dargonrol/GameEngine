@@ -35,18 +35,18 @@ add_executable(Pong
 		src/Core/Music/MusicManager.h
         src/Core/Level/Level.cpp
         src/Core/Level/Level.h
-		src/Core/Entity.cpp
-		src/Core/Entity.h
+		src/Core/ECS/Entity.h
 		src/Core/StateManager.cpp
 		src/Core/StateManager.h
 		src/Core/ErrorCodes.h
 		src/Core/ECS/Components.h
-		src/Core/ECS/Systems.cpp
-		src/Core/ECS/Systems.h
+        src/Core/ECS/Systems/Systems.cpp
+        src/Core/ECS/Systems/Systems.h
 		src/Core/ECS/EntityManager.cpp
 		src/Core/ECS/EntityManager.h
-		src/Core/ECS/Registry.cpp
-		src/Core/ECS/Registry.h
+        src/Core/ECS/Registry.h
+		src/Core/ECS/Systems/CollisionSystem.cpp
+		src/Core/ECS/Systems/CollisionSystem.h
 )
 
 target_compile_definitions(

@@ -18,7 +18,7 @@ public:
 
     virtual bool is_end_condition_met() = 0;
 
-    virtual void update(int delta) = 0;
+    virtual void update(float delta) = 0;
     virtual void render() = 0;
 
     ECS::EntityManager* getEntityManger();

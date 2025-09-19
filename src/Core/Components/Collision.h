@@ -1,4 +1,6 @@
 #pragma once
 #include "../../Game.h"
-
-void checkBallCollision(GameData& gamedata);
+namespace Pong
+{
+    void checkBallCollision(GameData& gamedata);
+}
