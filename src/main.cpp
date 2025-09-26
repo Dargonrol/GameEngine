@@ -5,7 +5,7 @@
 
 int main()
 {
-	Pong::Game& game = Pong::Game::getInstance();
+	Core::Game& game = Core::Game::getInstance();
 	game.init();
 	game.run();
 	game.shutdown();

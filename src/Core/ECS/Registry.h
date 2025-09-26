@@ -5,10 +5,16 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Components.h"
-#include "Entity.h"
+#include "Components/Components.h"
+#include "Entity/Entity.h"
+#include "Systems/System.h"
 
 namespace Core::ECS {
+
+    #define WITH_REGISTRY_OR_RETURN(expr) \
+        const auto reg = registry_.lock(); \
+        if (!reg) return expr;
+
     using Index = size_t;
     using Signature = std::bitset<64>;
 
@@ -28,6 +34,8 @@ namespace Core::ECS {
 
         std::unordered_map<ID, Index> id_to_index;
         std::unordered_map<Index, ID> index_to_id;
+
+        std::vector<System> systems;
 
         ComponentArray<Transform> transforms;
         ComponentArray<Velocity> velocities;

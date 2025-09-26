@@ -14,6 +14,7 @@ namespace Core::Renderer
 
     class IRenderer {
     public:
+        explicit IRenderer(Window* window);
         virtual ~IRenderer() = default;
 
         virtual void Init(int width, int height, const std::string& title) = 0;
@@ -27,7 +28,7 @@ namespace Core::Renderer
         //virtual void DrawTexture(TextureHandle tex, const Vec2& pos) = 0;
 
     protected:
-        Window window_;
+        Window window_ = {};
     };
 }
 

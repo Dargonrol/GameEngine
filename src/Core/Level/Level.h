@@ -1,27 +1,29 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#pragma once
+
 #include <functional>
 #include <memory>
 #include <string>
+#include <utility>
 
-#include "../ECS/EntityManager.h"
+#include "../ECS/ECS.h"
 
 namespace Core {
 
 class Level {
 public:
-    explicit Level(std::string name);
+    explicit Level(std::string name) : name(std::move(name))
+    {
+        ecs_ = std::make_unique<ECS::ECS>();
+    }
     virtual ~Level() = default;
 
-    virtual void init() = 0;
-    virtual void shutdown() = 0;
+    virtual void Init() = 0;
+    virtual void Shutdown() = 0;
 
-    virtual bool is_end_condition_met() = 0;
+    virtual bool Is_end_condition_met() = 0;
 
-    virtual void update(float delta) = 0;
-    virtual void render() = 0;
-
-    ECS::EntityManager* getEntityManger();
+    virtual void Update(float delta) = 0;
+    virtual void Render() = 0;
 
 
 public:
@@ -30,9 +32,7 @@ public:
     std::function<void(Level&)> level_end_callback = nullptr;
 
 private:
-    std::unique_ptr<ECS::EntityManager> entity_manager_;
+    std::unique_ptr<ECS::ECS> ecs_;
 };
 
-} // Pong
-
-#endif //LEVEL_H
+}

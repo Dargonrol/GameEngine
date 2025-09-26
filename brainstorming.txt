@@ -23,3 +23,7 @@ StateManager
 
 https://www.youtube.com/watch?v=y2ECgOhoDGs
 background like that. But moving. Raytracing on those pixels.
+
+Systemmanager
+- register systems in registry,
+- system manager calls systems if they are not suspended.

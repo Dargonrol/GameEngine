@@ -84,7 +84,7 @@ namespace Core
                 DEFAULT_SPEED
             }
         };
-        Vector2 vel = {(float)GetRandomValue(-100, 100) / 100, (float)GetRandomValue(-100, 100) / 100};
+        Vector2 vel = {(float)GetRandomValue(-100, 100) / 100, (float)GetRandomValue(-50, 50) / 50};
         gamedata.ball = Ball{
             Vector2{(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2},
             vel / Vector2Length(vel),
@@ -114,7 +114,7 @@ namespace Core
         gamedata.players[1].bar.height = barHeight;
         gamedata.players[1].bar.width = barWidth;
 
-        Vector2 vel = {(float)GetRandomValue(-100, 100) / 100, (float)GetRandomValue(-100, 100) / 100};
+        Vector2 vel = {(float)GetRandomValue(-100, 100) / 100, (float)GetRandomValue(-50, 50) / 50};
         gamedata.ball.pos = Vector2{(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2};
         gamedata.ball.vel = vel / Vector2Length(vel),
         gamedata.ball.acc = 0;

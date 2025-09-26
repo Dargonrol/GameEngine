@@ -10,20 +10,7 @@ namespace Core {
 
 class StateManager { // Singleton
 public:
-    Level* get_current_level() const;
-    int change_level(const std::string& identifier);
 
-    /**
-     * Registers a new Level. Checks if the identifier does already exist. If yes returns a non zero value.
-     * @param level the level to add
-     * @param identifier identifier to reference the level
-     * @return Error Code
-     */
-    int register_level(Level* level, const std::string& identifier);
-
-private:
-    std::unordered_map<std::string, std::unique_ptr<Level>> _level_map = {};
-    std::string _current_level = {};
 
 
     // Singleton

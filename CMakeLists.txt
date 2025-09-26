@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(Pong VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include(FetchContent)
@@ -40,17 +40,16 @@ add_executable(Pong
         src/Core/Collision.cpp
 		src/Core/Music/MusicManager.cpp
 		src/Core/Music/MusicManager.h
-        src/Core/Level/Level.cpp
-        src/Core/Level/Level.h
-		src/Core/ECS/Entity.h
+		src/Core/Level/Level.h
+		src/Core/ECS/Entity/Entity.h
 		src/Core/StateManager.cpp
 		src/Core/StateManager.h
 		src/Core/ErrorCodes.h
-		src/Core/ECS/Components.h
-        src/Core/ECS/Systems/Systems.cpp
-        src/Core/ECS/Systems/Systems.h
-		src/Core/ECS/EntityManager.cpp
-		src/Core/ECS/EntityManager.h
+		src/Core/ECS/Components/Components.h
+		src/Core/ECS/Systems/SystemManager.cpp
+		src/Core/ECS/Systems/SystemManager.h
+		src/Core/ECS/Entity/EntityManager.cpp
+		src/Core/ECS/Entity/EntityManager.h
         src/Core/ECS/Registry.h
 		src/Core/ECS/Systems/CollisionSystem.cpp
 		src/Core/ECS/Systems/CollisionSystem.h
@@ -59,6 +58,11 @@ add_executable(Pong
 		src/Core/Renderer/RaylibRenderer/RaylibRenderer.cpp
 		src/Core/Renderer/RaylibRenderer/RaylibRenderer.h
 		src/Core/Renderer/RaylibRenderer/Window.h
+		src/Core/ECS/Systems/System.h
+		src/Core/ECS/ECS.cpp
+		src/Core/ECS/ECS.h
+		src/Core/Level/LevelManager.cpp
+		src/Core/Level/LevelManager.h
 )
 
 target_compile_definitions(
