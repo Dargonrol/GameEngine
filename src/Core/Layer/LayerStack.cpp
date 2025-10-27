@@ -5,15 +5,14 @@
 #include "LayerStack.h"
 
 namespace Core {
-
-    void LayerStack::update()
+    void LayerStack::update() const
     {
         const auto renderer = renderer_.lock(); \
         if (!renderer) return;
 
         for (const std::unique_ptr<Layer> layer: layerStack_)
         {
-            for (RenderData data: layer->renderDataCommandQueue)
+            for (RenderData data: layer->GetCommandQueue())
             {
                 data.ID.layerID = layer->ID;
                 switch (data.command)

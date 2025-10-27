@@ -1,6 +1,7 @@
 #ifndef LAYER_H
 #define LAYER_H
 #include "../Level/Level.h"
+#include "../Level/LevelManager.h"
 
 namespace Core {
 
@@ -31,6 +32,9 @@ struct RenderData
 class Layer {
 
 public:
+    Layer() : levelManager_(std::make_unique<LevelManger>(renderDataCommandQueue)) {}
+    ~Layer();
+
     void suspend(); // ecs.get_every_renderabel_entity() -> issue unregister command
     void activate(); // vise versa
 
@@ -41,15 +45,15 @@ public:
 
     void onEvent();
 
+    [[nodiscard]] const std::queue<RenderData>& GetCommandQueue() const { return renderDataCommandQueue; }
+
 
 public:
-    size_t ID;
-
-public:
-    std::unique_ptr<Level> level;
-    std::queue<RenderData> renderDataCommandQueue;
+    size_t ID{};
 
 private:
+    std::unique_ptr<LevelManger> levelManager_;
+    const std::queue<RenderData> renderDataCommandQueue;
     bool suspended = false;
 };
 

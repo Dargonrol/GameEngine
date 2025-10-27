@@ -8,7 +8,10 @@ namespace Core {
 
 class LayerStack {
 public:
-    void update();
+    LayerStack();
+    ~LayerStack();
+
+    void update() const;
 
     template<typename T>
     void PushLayer(); //has to set LayerID

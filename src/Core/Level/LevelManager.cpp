@@ -4,6 +4,7 @@ namespace Core
 {
     void LevelManger::RegisterLevel(std::unique_ptr<Level> level, const std::string &identifier)
     {
+        level->SetRenderDataCommandQueue(renderDataCommandQueue_);
         level_map_.emplace(
             identifier,
             std::move(level)
