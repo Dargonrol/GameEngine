@@ -3,6 +3,7 @@
 #include <string>
 
 #include "../Color.h"
+#include "../Layer/Layer.h"
 #include "RaylibRenderer/Window.h"
 
 namespace Core::Renderer
@@ -26,6 +27,10 @@ namespace Core::Renderer
         virtual TextureHandle LoadTexture(const std::filesystem::path& path) = 0;
         virtual void UnloadTexture(TextureHandle tex) = 0;
         //virtual void DrawTexture(TextureHandle tex, const Vec2& pos) = 0;
+
+        void RegisterRenderable(RenderData& renderData);
+        void UnRegisterRenderable(RenderData& renderData);
+        void UpdateRenderable(RenderData& renderData);
 
     protected:
         Window window_ = {};

@@ -42,8 +42,6 @@ add_executable(Pong
 		src/Core/Music/MusicManager.h
 		src/Core/Level/Level.h
 		src/Core/ECS/Entity/Entity.h
-		src/Core/StateManager.cpp
-		src/Core/StateManager.h
 		src/Core/ErrorCodes.h
 		src/Core/ECS/Components/Components.h
 		src/Core/ECS/Systems/SystemManager.cpp
@@ -63,6 +61,9 @@ add_executable(Pong
 		src/Core/ECS/ECS.h
 		src/Core/Level/LevelManager.cpp
 		src/Core/Level/LevelManager.h
+		src/Core/Layer/Layer.h
+		src/Core/Layer/LayerStack.cpp
+		src/Core/Layer/LayerStack.h
 )
 
 target_compile_definitions(

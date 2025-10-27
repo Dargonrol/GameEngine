@@ -1,24 +1,11 @@
-Game
-	Level
-	State Manager
-	Music Manager
-	Sound Manager
-	
-	
-	
-	
-Level
+
+Level / Scene
 - create level
 - add entities of any kind
 - ecs typa shit local to level
 - entities have components such as player control
 - Level contains local level stats&data such as local score.
 	callback methods on level end and start to update local score with global gamestats
-	
-StateManager
-- get current level
-- change level
-- levels get saved in map with keyword. (like music)
 
 
 https://www.youtube.com/watch?v=y2ECgOhoDGs
@@ -27,3 +14,36 @@ background like that. But moving. Raytracing on those pixels.
 Systemmanager
 - register systems in registry,
 - system manager calls systems if they are not suspended.
+
+
+
+
+LayerStack
+> decides if Scene should be rendered or not aka suspended scene or active scene.
+> if not suspended LayerStack issues request or handles a way to push Renderables to the renderer.
+> this does not work because LayerStack does not know when new entity get's added.
+> solution: The LayerStack has RenderableCommandQueue
+> If ECS adds new entity, a Renderable get's pushed to the queue with command add/delete with the Entity ID as an unique identifier
+> LayerStack if layer not suspended processes those commands and puts Data into Renderer
+> Renderer keeps track of ID -> index to manage data
+> if Layer get's suspended Data of only this Scene should not be rendered anymore.
+> to archive -> each ECS has it's own renderable/ loops over every Mesh component and puts delete requests in the command queue of those entities.
+> vise versa when unsuspended / initialized usw
+> Problem: ECS is not global, ID are duplicated -> Renderer does not know what to delete.
+> Solution: LayerStack tracks where command comes from and adds Layer id to data.
+> Renderer always stores Data grouped by layer id
+> makes prioritized rendering possible, avoids entity id duplication.
+> How does Renderable look like?
+struct RenderObjID {
+    LayerID id;
+    Entity id;
+}
+
+unorderedMap<RenderObjID, size_t> IDtoIndex;
+unorderedMap<size_t, RenderObjId> IndexToID;
+
+struct Renderable {
+    Mesh mesh;
+    Texture tex;
+    TransformComponent trf;
+}

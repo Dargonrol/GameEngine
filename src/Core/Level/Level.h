@@ -23,7 +23,11 @@ public:
     virtual bool Is_end_condition_met() = 0;
 
     virtual void Update(float delta) = 0;
-    virtual void Render() = 0;
+
+    void SetRenderDataCommandQueue(const std::queue<RenderData>& renderDataCommandQueue) const
+    {
+        ecs_->SetRenderDataCommandQueue(renderDataCommandQueue);
+    }
 
 
 public:

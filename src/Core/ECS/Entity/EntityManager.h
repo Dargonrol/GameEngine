@@ -1,11 +1,16 @@
 #pragma once
 
 #include <memory>
+#include <queue>
 
 #include "../Components/Components.h"
 #include "../Registry.h"
 #include "Entity.h"
 #include "../../ErrorCodes.h"
+
+namespace Core {
+    struct RenderData;
+}
 
 namespace Core::ECS
 {
@@ -40,11 +45,14 @@ namespace Core::ECS
         [[nodiscard]] int GetEntityCap() const;
         void ChangeEntityCap(int cap) const;
 
+        void SetRenderDataCommandQueue(const std::queue<RenderData>& renderDataCommandQueue) { this->renderDataCommandQueue = renderDataCommandQueue; }
+
     private:
         [[nodiscard]] bool ID_exists(ID id) const;
 
     private:
         std::weak_ptr<Registry> registry_;
+        std::queue<RenderData>& renderDataCommandQueue;
     };
 }
 
