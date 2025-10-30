@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Collision.h"
 namespace Core
 {

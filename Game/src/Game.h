@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
 
-#include "Core/Graphics/Background.h"
+#include "../src/Core/Graphics/Background.h"
 #include "Core/Ball.h"
 #include "Core/Player.h"
 

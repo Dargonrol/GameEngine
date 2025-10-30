@@ -6,8 +6,8 @@
 #include "Core/Collision.h"
 #include "Core/Constants.h"
 #include "Core/Input.h"
-#include "Core/Graphics/Draw.h"
-#include "Core/Music/MusicManager.h"
+#include "../src/Core/Graphics/Draw.h"
+#include "../src/Core/Music/MusicManager.h"
 
 namespace Core
 {
@@ -131,7 +131,7 @@ namespace Core
         gamedata.gameState = GameState::START;
         gamedata.background = Background{};
         MusicManager::getInstance().init();
-        MusicManager::getInstance().registerTrack(std::filesystem::path("../resources/lied30.mp3"), "Track_1");
+        MusicManager::getInstance().registerTrack(std::filesystem::path("../Game/resources/lied30.mp3"), "Track_1");
         MusicManager::getInstance().playTrack("Track_1");
     }
 
