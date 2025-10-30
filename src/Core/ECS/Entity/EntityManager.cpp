@@ -140,6 +140,9 @@ namespace Core::ECS {
         reg->entity_cap = cap;
     }
 
+    void EntityManager::UnregisterAllRenderablesCommandIssue() const {}
+    void EntityManager::RegisterAllRenderablesCommandIssue() const {}
+
     bool EntityManager::ID_exists(const ID id) const
     {
         WITH_REGISTRY_OR_RETURN(false)

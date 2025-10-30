@@ -38,9 +38,8 @@ public:
 private:
     template<typename T>
     requires(std::is_base_of_v<Layer, T>)
-    bool HasLayer() const;
-    void UnRegisterRenderable(const std::unique_ptr<Layer> &layer) const;
-    void RegisterRenderable(const std::unique_ptr<Layer> &layer) const;
+    [[nodiscard]] bool HasLayer() const;
+    void dispatch_commands_in_queue(Layer *layer) const;
 
 private:
     std::vector<std::unique_ptr<Layer>> layerStack_;

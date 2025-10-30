@@ -17,17 +17,12 @@ namespace Core {
 
     void LayerStack::PopLayer()
     {
-        const auto renderer = renderer_.lock();
-        if (!renderer) return;
-
-        auto& layer = layerStack_.back();
+        const auto& layer = layerStack_.back();
 
         layer->UnregisterAllRenderablesCommandIssue();
 
-        for (const auto& data: layer.get()->GetCommandQueue())
-        {
-            renderer->UnRegisterRenderable(data);
-        }
+        dispatch_commands_in_queue(layer.get());
+
         layerStack_.pop_back();
     }
 
@@ -37,9 +32,6 @@ namespace Core {
         if (index > layerStack_.size()) { return; }
         if (HasLayer<T>()) { return; }
 
-        const auto renderer = renderer_.lock(); \
-        if (!renderer) return;
-
         // issue UnRegister Commands to renderer with all entities with old IDs
         // insert layer and update every ID
         // issue Register commands to renderer with all entities with new IDs
@@ -47,10 +39,7 @@ namespace Core {
         for (size_t i = index; i < layerStack_.size(); ++i)
         {
             layerStack_[i]->UnregisterAllRenderablesCommandIssue();
-            for (const auto& data: layerStack_[i].get()->GetCommandQueue())
-            {
-                renderer->UnRegisterRenderable(data);
-            }
+            dispatch_commands_in_queue(layerStack_[i].get());
         }
 
         auto layer = std::make_unique<T>();
@@ -61,10 +50,7 @@ namespace Core {
         {
             layerStack_[i]->ID += 1;
             layerStack_[i]->RegisterAllRenderablesCommandIssue();
-            for (const auto& data: layerStack_[i].get()->GetCommandQueue())
-            {
-                renderer->RegisterRenderable(data);
-            }
+            dispatch_commands_in_queue(layerStack_[i].get());
         }
 
     }
@@ -78,25 +64,16 @@ namespace Core {
         if (!renderer) return;
 
         layerStack_[index]->UnregisterAllRenderablesCommandIssue();
-        for (const auto& data: layerStack_[index].get()->GetCommandQueue())
-        {
-            renderer->UnRegisterRenderable(data);
-        }
+        dispatch_commands_in_queue(layerStack_[index].get());
         layerStack_.erase(layerStack_.begin() + index);
 
         for (size_t i = index; i < layerStack_.size(); ++i)
         {
             layerStack_[i]->UnregisterAllRenderablesCommandIssue();
-            for (const auto& data: layerStack_[i].get()->GetCommandQueue())
-            {
-                renderer->UnRegisterRenderable(data);
-            }
+            dispatch_commands_in_queue(layerStack_[i].get());
             layerStack_[i]->ID = i;
             layerStack_[i]->RegisterAllRenderablesCommandIssue();
-            for (const auto& data: layerStack_[i].get()->GetCommandQueue())
-            {
-                renderer->RegisterRenderable(data);
-            }
+            dispatch_commands_in_queue(layerStack_[i].get());
         }
     }
 
@@ -110,7 +87,7 @@ namespace Core {
                 std::queue<RenderData> empty;
                 std::swap(layer->GetCommandQueue(), empty);
                 layer->suspend();
-                UnRegisterRenderable(layer);
+                dispatch_commands_in_queue(layer.get());
                 return;
             }
         }
@@ -124,7 +101,7 @@ namespace Core {
             if (typeid(*layer) == typeid(T))
             {
                 layer->activate();
-                RegisterRenderable(layer);
+                dispatch_commands_in_queue(layer.get());
                 return;
             }
 
@@ -133,31 +110,10 @@ namespace Core {
 
     void LayerStack::update() const
     {
-        const auto renderer = renderer_.lock(); \
-        if (!renderer) return;
-
         for (const std::unique_ptr<Layer>& layer: layerStack_)
         {
-            std::queue<RenderData>& queue = layer->GetCommandQueue();
-            while (!queue.empty())
-            {
-                RenderData data = queue.front();
-                queue.pop();
-
-                data.ID.layerID = layer->ID;
-                switch (data.command)
-                {
-                    case OBJ_Command::REGISTER:
-                        renderer->RegisterRenderable(data);
-                        break;
-                    case OBJ_Command::UNREGISTER:
-                        renderer->UnRegisterRenderable(data);
-                        break;
-                    case OBJ_Command::UPDATE:
-                        renderer->UpdateRenderable(data);
-                        break;
-                }
-            }
+            layer->update();
+            dispatch_commands_in_queue(layer.get());
         }
     }
 
@@ -174,26 +130,32 @@ namespace Core {
         return false;
     }
 
-    void LayerStack::UnRegisterRenderable(const std::unique_ptr<Layer> &layer) const
+    void LayerStack::dispatch_commands_in_queue(Layer *layer) const
     {
         const auto renderer = renderer_.lock(); \
         if (!renderer) return;
 
-        for (const auto& data: layer.get()->GetCommandQueue())
+        std::queue<RenderData>& queue = layer->GetCommandQueue();
+        while (!queue.empty())
         {
-            renderer->UnRegisterRenderable(data);
+            RenderData data = queue.front();
+            queue.pop();
+
+            data.ID.layerID = layer->ID;
+            switch (data.command)
+            {
+                case OBJ_Command::REGISTER:
+                    renderer->RegisterRenderable(data);
+                    break;
+                case OBJ_Command::UNREGISTER:
+                    renderer->UnRegisterRenderable(data);
+                    break;
+                case OBJ_Command::UPDATE:
+                    renderer->UpdateRenderable(data);
+                    break;
+            }
         }
     }
 
-    void LayerStack::RegisterRenderable(const std::unique_ptr<Layer> &layer) const
-    {
-        const auto renderer = renderer_.lock(); \
-        if (!renderer) return;
-
-        for (const auto& data: layer.get()->GetCommandQueue())
-        {
-            renderer->RegisterRenderable(data);
-        }
-    }
 
 }
