@@ -47,8 +47,8 @@ public:
 
     [[nodiscard]] std::queue<RenderData>& GetCommandQueue() { return renderDataCommandQueue; }
 
-    void UnregisterAllRenderablesCommandIssue() const;
-    void RegisterAllRenderablesCommandIssue() const;
+    void CollectUnregisterCommands() const;
+    void CollectRegisterCommands() const;
 
 
 public:

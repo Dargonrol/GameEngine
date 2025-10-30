@@ -55,13 +55,13 @@ namespace Core
         return ERROR::NONE;
     }
 
-    void LevelManger::UnRegisterAllRenderablesCommandIssue() const
+    void LevelManger::CollectUnregisterCommands() const
     {
-        current_level_->UnregisterAllRenderablesCommandIssue();
+        current_level_->CollectUnregisterCommands();
     }
 
-    void LevelManger::RegisterAllRenderablesCommandIssue() const
+    void LevelManger::CollectRegisterCommands() const
     {
-        current_level_->RegisterAllRenderablesCommandIssue();
+        current_level_->CollectRegisterCommands();
     }
 }

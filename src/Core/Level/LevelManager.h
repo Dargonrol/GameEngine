@@ -18,8 +18,8 @@ namespace Core
 
         ERROR ChangeLevel(const std::string& identifier);
 
-        void UnRegisterAllRenderablesCommandIssue() const;
-        void RegisterAllRenderablesCommandIssue() const;
+        void CollectUnregisterCommands() const;
+        void CollectRegisterCommands() const;
 
     private:
         std::unordered_map<std::string, std::unique_ptr<Level>> level_map_ = {};

@@ -35,6 +35,8 @@ public:
     requires(std::is_base_of_v<Layer, T>)
     void ActivateLayer() const;
 
+    void SetRenderer(std::weak_ptr<Renderer::IRenderer> renderer);
+
 private:
     template<typename T>
     requires(std::is_base_of_v<Layer, T>)

@@ -1,5 +1,7 @@
 #include "LayerStack.h"
 
+#include <utility>
+
 namespace Core {
     LayerStack::LayerStack() {}
 
@@ -19,7 +21,7 @@ namespace Core {
     {
         const auto& layer = layerStack_.back();
 
-        layer->UnregisterAllRenderablesCommandIssue();
+        layer->CollectUnregisterCommands();
 
         dispatch_commands_in_queue(layer.get());
 
@@ -38,7 +40,7 @@ namespace Core {
 
         for (size_t i = index; i < layerStack_.size(); ++i)
         {
-            layerStack_[i]->UnregisterAllRenderablesCommandIssue();
+            layerStack_[i]->CollectUnregisterCommands();
             dispatch_commands_in_queue(layerStack_[i].get());
         }
 
@@ -49,7 +51,7 @@ namespace Core {
         for (size_t i = index + 1; i < layerStack_.size(); ++i)
         {
             layerStack_[i]->ID += 1;
-            layerStack_[i]->RegisterAllRenderablesCommandIssue();
+            layerStack_[i]->CollectRegisterCommands();
             dispatch_commands_in_queue(layerStack_[i].get());
         }
 
@@ -60,19 +62,16 @@ namespace Core {
     {
         if (index >= layerStack_.size()) { return; }
 
-        const auto renderer = renderer_.lock(); \
-        if (!renderer) return;
-
-        layerStack_[index]->UnregisterAllRenderablesCommandIssue();
+        layerStack_[index]->CollectUnregisterCommands();
         dispatch_commands_in_queue(layerStack_[index].get());
         layerStack_.erase(layerStack_.begin() + index);
 
         for (size_t i = index; i < layerStack_.size(); ++i)
         {
-            layerStack_[i]->UnregisterAllRenderablesCommandIssue();
+            layerStack_[i]->CollectUnregisterCommands();
             dispatch_commands_in_queue(layerStack_[i].get());
             layerStack_[i]->ID = i;
-            layerStack_[i]->RegisterAllRenderablesCommandIssue();
+            layerStack_[i]->CollectRegisterCommands();
             dispatch_commands_in_queue(layerStack_[i].get());
         }
     }
@@ -155,6 +154,11 @@ namespace Core {
                     break;
             }
         }
+    }
+
+    void LayerStack::SetRenderer(std::weak_ptr<Renderer::IRenderer> renderer)
+    {
+        renderer_ = std::move(renderer);
     }
 
 

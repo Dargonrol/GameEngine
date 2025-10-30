@@ -2,9 +2,9 @@
 
 namespace Core
 {
-    void Layer::RegisterAllRenderablesCommandIssue() const
+    void Layer::CollectRegisterCommands() const
     {
-        levelManager_->RegisterAllRenderablesCommandIssue();
+        levelManager_->CollectRegisterCommands();
     }
 
     void Layer::suspend() {}
@@ -19,9 +19,9 @@ namespace Core
 
     void Layer::onEvent() {}
 
-    void Layer::UnregisterAllRenderablesCommandIssue() const
+    void Layer::CollectUnregisterCommands() const
     {
-        levelManager_->UnRegisterAllRenderablesCommandIssue();
+        levelManager_->CollectUnregisterCommands();
     }
 
 

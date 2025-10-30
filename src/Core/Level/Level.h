@@ -29,14 +29,14 @@ public:
         ecs_->SetRenderDataCommandQueue(renderDataCommandQueue);
     }
 
-    void UnregisterAllRenderablesCommandIssue() const
+    void CollectUnregisterCommands() const
     {
-        ecs_->UnregisterAllRenderablesCommandIssue();
+        ecs_->CollectUnregisterCommands();
     }
 
-    void RegisterAllRenderablesCommandIssue() const
+    void CollectRegisterCommands() const
     {
-        ecs_->RegisterAllRenderablesCommandIssue();
+        ecs_->CollectRegisterCommands();
     }
 
 

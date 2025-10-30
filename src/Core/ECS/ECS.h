@@ -24,13 +24,13 @@ public:
         entity_manager_->SetRenderDataCommandQueue(renderDataCommandQueue);
     }
 
-    void UnregisterAllRenderablesCommandIssue() const
+    void CollectUnregisterCommands() const
     {
-        entity_manager_->UnregisterAllRenderablesCommandIssue();
+        entity_manager_->CollectUnregisterCommands();
     }
-    void RegisterAllRenderablesCommandIssue() const
+    void CollectRegisterCommands() const
     {
-        entity_manager_->RegisterAllRenderablesCommandIssue();
+        entity_manager_->CollectRegisterCommands();
     }
 
 
