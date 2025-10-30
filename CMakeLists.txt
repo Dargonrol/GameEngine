@@ -57,8 +57,7 @@ add_executable(Pong
 		src/Core/Renderer/RaylibRenderer/RaylibRenderer.h
 		src/Core/Renderer/RaylibRenderer/Window.h
 		src/Core/ECS/Systems/System.h
-		src/Core/ECS/ECS.cpp
-		src/Core/ECS/ECS.h
+        src/Core/ECS/ECS.h
 		src/Core/Level/LevelManager.cpp
 		src/Core/Level/LevelManager.h
 		src/Core/Layer/Layer.h

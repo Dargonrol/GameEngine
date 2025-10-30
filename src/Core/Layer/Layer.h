@@ -32,7 +32,7 @@ struct RenderData
 class Layer {
 
 public:
-    Layer() : levelManager_(std::make_unique<LevelManger>(renderDataCommandQueue)) {}
+    Layer() : levelManager_(std::make_unique<LevelManger>(&renderDataCommandQueue)) {}
     ~Layer();
 
     void suspend(); // ecs.get_every_renderabel_entity() -> issue unregister command
@@ -45,7 +45,7 @@ public:
 
     void onEvent();
 
-    [[nodiscard]] const std::queue<RenderData>& GetCommandQueue() const { return renderDataCommandQueue; }
+    [[nodiscard]] std::queue<RenderData>& GetCommandQueue() { return renderDataCommandQueue; }
 
 
 public:
@@ -53,7 +53,7 @@ public:
 
 private:
     std::unique_ptr<LevelManger> levelManager_;
-    const std::queue<RenderData> renderDataCommandQueue;
+    std::queue<RenderData> renderDataCommandQueue;
     bool suspended = false;
 };
 

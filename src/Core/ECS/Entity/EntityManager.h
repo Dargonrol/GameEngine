@@ -17,7 +17,7 @@ namespace Core::ECS
     class EntityManager
     {
     public:
-        EntityManager(const std::shared_ptr<Registry>& registry);
+        explicit EntityManager(const std::shared_ptr<Registry>& registry);
         ~EntityManager() = default;
 
         /**
@@ -45,14 +45,14 @@ namespace Core::ECS
         [[nodiscard]] int GetEntityCap() const;
         void ChangeEntityCap(int cap) const;
 
-        void SetRenderDataCommandQueue(const std::queue<RenderData>& renderDataCommandQueue) { this->renderDataCommandQueue = renderDataCommandQueue; }
+        void SetRenderDataCommandQueue(std::queue<RenderData>* const renderDataCommandQueue) { renderDataCommandQueue_ = renderDataCommandQueue; }
 
     private:
         [[nodiscard]] bool ID_exists(ID id) const;
 
     private:
         std::weak_ptr<Registry> registry_;
-        std::queue<RenderData>& renderDataCommandQueue;
+        std::queue<RenderData>* renderDataCommandQueue_ = nullptr;
     };
 }
 

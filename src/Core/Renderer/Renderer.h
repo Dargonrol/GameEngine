@@ -28,9 +28,9 @@ namespace Core::Renderer
         virtual void UnloadTexture(TextureHandle tex) = 0;
         //virtual void DrawTexture(TextureHandle tex, const Vec2& pos) = 0;
 
-        void RegisterRenderable(RenderData& renderData);
-        void UnRegisterRenderable(RenderData& renderData);
-        void UpdateRenderable(RenderData& renderData);
+        void RegisterRenderable(RenderData& renderData) {};
+        void UnRegisterRenderable(RenderData& renderData) {};
+        void UpdateRenderable(RenderData& renderData) {};
 
     protected:
         Window window_ = {};

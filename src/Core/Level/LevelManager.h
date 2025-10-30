@@ -6,7 +6,7 @@ namespace Core
     class LevelManger
     {
     public:
-        explicit LevelManger(const std::queue<RenderData>& renderDataCommandQueue): renderDataCommandQueue_(renderDataCommandQueue) {}
+        explicit LevelManger(std::queue<RenderData>* renderDataCommandQueue): renderDataCommandQueue_(renderDataCommandQueue) {}
         ~LevelManger() = default;
 
         void RegisterLevel(std::unique_ptr<Level> level, const std::string& identifier);
@@ -22,6 +22,6 @@ namespace Core
         std::unordered_map<std::string, std::unique_ptr<Level>> level_map_ = {};
         std::string current_level_name_ = {};
         Level* current_level_ = nullptr;
-        const std::queue<RenderData>& renderDataCommandQueue_;
+        std::queue<RenderData>* renderDataCommandQueue_ = nullptr;
     };
 };

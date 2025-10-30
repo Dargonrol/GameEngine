@@ -24,7 +24,7 @@ public:
 
     virtual void Update(float delta) = 0;
 
-    void SetRenderDataCommandQueue(const std::queue<RenderData>& renderDataCommandQueue) const
+    void SetRenderDataCommandQueue(std::queue<RenderData>* renderDataCommandQueue) const
     {
         ecs_->SetRenderDataCommandQueue(renderDataCommandQueue);
     }

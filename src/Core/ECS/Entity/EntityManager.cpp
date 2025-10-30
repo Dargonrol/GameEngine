@@ -3,8 +3,7 @@
 #include <utility>
 
 namespace Core::ECS {
-    EntityManager::EntityManager(const std::shared_ptr<Registry>& registry) : registry_(registry),
-                                                                              renderDataCommandQueue() {}
+    EntityManager::EntityManager(const std::shared_ptr<Registry>& registry) : registry_(registry) {}
 
     ID EntityManager::RegisterEntity() const
     {

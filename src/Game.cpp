@@ -6,7 +6,6 @@
 #include "Core/Collision.h"
 #include "Core/Constants.h"
 #include "Core/Input.h"
-#include "Core/StateManager.h"
 #include "Core/Graphics/Draw.h"
 #include "Core/Music/MusicManager.h"
 
