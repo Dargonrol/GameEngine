@@ -33,7 +33,7 @@ class Layer {
 
 public:
     Layer() : levelManager_(std::make_unique<LevelManger>(&renderDataCommandQueue)) {}
-    ~Layer();
+    ~Layer() = default;
 
     void suspend(); // ecs.get_every_renderabel_entity() -> issue unregister command
     void activate(); // vise versa
@@ -46,6 +46,9 @@ public:
     void onEvent();
 
     [[nodiscard]] std::queue<RenderData>& GetCommandQueue() { return renderDataCommandQueue; }
+
+    void UnregisterAllRenderablesCommandIssue() const;
+    void RegisterAllRenderablesCommandIssue() const;
 
 
 public:

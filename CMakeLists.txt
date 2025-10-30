@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Pong VERSION 0.1 LANGUAGES CXX)
+project(Pong VERSION 0.2 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -63,6 +63,7 @@ add_executable(Pong
 		src/Core/Layer/Layer.h
 		src/Core/Layer/LayerStack.cpp
 		src/Core/Layer/LayerStack.h
+		src/Core/Layer/Layer.cpp
 )
 
 target_compile_definitions(

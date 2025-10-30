@@ -24,6 +24,16 @@ public:
         entity_manager_->SetRenderDataCommandQueue(renderDataCommandQueue);
     }
 
+    void UnregisterAllRenderablesCommandIssue() const
+    {
+        entity_manager_->UnregisterAllRenderablesCommandIssue();
+    }
+    void RegisterAllRenderablesCommandIssue() const
+    {
+        entity_manager_->RegisterAllRenderablesCommandIssue();
+    }
+
+
 private:
     std::shared_ptr<Registry> registry_;
     std::unique_ptr<EntityManager> entity_manager_;

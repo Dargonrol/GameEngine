@@ -46,6 +46,8 @@ namespace Core::ECS
         void ChangeEntityCap(int cap) const;
 
         void SetRenderDataCommandQueue(std::queue<RenderData>* const renderDataCommandQueue) { renderDataCommandQueue_ = renderDataCommandQueue; }
+        void UnregisterAllRenderablesCommandIssue() const;
+        void RegisterAllRenderablesCommandIssue() const;
 
     private:
         [[nodiscard]] bool ID_exists(ID id) const;

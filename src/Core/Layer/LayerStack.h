@@ -14,14 +14,33 @@ public:
     void update() const;
 
     template<typename T>
-    void PushLayer(); //has to set LayerID
+    requires(std::is_base_of_v<Layer, T>)
+    void PushLayer();
+
+    void PopLayer();
 
     template<typename T>
-    void SuspendLayer()
-    {
-        static_assert(std::is_base_of_v<Layer, T>, "T must inherit from Layer");
-        // empties command queue and calls suspend on layer then for a last time works through queue which will be filled with unregister commands.
-    }
+    requires(std::is_base_of_v<Layer, T>)
+    void InsertLayer(size_t index);
+
+    template<typename T>
+    requires(std::is_base_of_v<Layer, T>)
+    void RemoveLayer(size_t index);
+
+    template<typename T>
+    requires(std::is_base_of_v<Layer, T>)
+    void SuspendLayer() const; // empties command queue and calls suspend on layer then for a last time works through queue which will be filled with unregister commands.
+
+    template<typename T>
+    requires(std::is_base_of_v<Layer, T>)
+    void ActivateLayer() const;
+
+private:
+    template<typename T>
+    requires(std::is_base_of_v<Layer, T>)
+    bool HasLayer() const;
+    void UnRegisterRenderable(const std::unique_ptr<Layer> &layer) const;
+    void RegisterRenderable(const std::unique_ptr<Layer> &layer) const;
 
 private:
     std::vector<std::unique_ptr<Layer>> layerStack_;

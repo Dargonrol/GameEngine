@@ -29,6 +29,16 @@ public:
         ecs_->SetRenderDataCommandQueue(renderDataCommandQueue);
     }
 
+    void UnregisterAllRenderablesCommandIssue() const
+    {
+        ecs_->UnregisterAllRenderablesCommandIssue();
+    }
+
+    void RegisterAllRenderablesCommandIssue() const
+    {
+        ecs_->RegisterAllRenderablesCommandIssue();
+    }
+
 
 public:
     const std::string name;
