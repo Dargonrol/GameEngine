@@ -3,7 +3,7 @@
 #include <memory>
 #include <queue>
 
-#include "../Components/Components.h"
+#include "../Component/Component.h"
 #include "../Registry.h"
 #include "Entity.h"
 #include "../../ErrorCodes.h"
@@ -51,6 +51,7 @@ namespace Core::ECS
 
     private:
         [[nodiscard]] bool ID_exists(ID id) const;
+        [[nodiscard]] bool EntityIsRenderable(ID id) const;
 
     private:
         std::weak_ptr<Registry> registry_;

@@ -29,10 +29,10 @@ namespace Core {
     }
 
     template<typename T> requires (std::is_base_of_v<Layer, T>)
-    void LayerStack::InsertLayer(const size_t index)
+    Result<void> LayerStack::InsertLayer(const size_t index)
     {
-        if (index > layerStack_.size()) { return; }
-        if (HasLayer<T>()) { return; }
+        if (index > layerStack_.size()) { return {ERROR::INDEX_OUT_OF_RANGE}; }
+        if (HasLayer<T>()) { return {ERROR::ALREADY_EXISTS}; }
 
         // issue UnRegister Commands to renderer with all entities with old IDs
         // insert layer and update every ID
@@ -55,6 +55,7 @@ namespace Core {
             dispatch_commands_in_queue(layerStack_[i].get());
         }
 
+        return {ERROR::NONE};
     }
 
     template<typename T> requires (std::is_base_of_v<Layer, T>)
@@ -107,11 +108,14 @@ namespace Core {
         }
     }
 
-    void LayerStack::update() const
+    void LayerStack::update(float delta) const
     {
         for (const std::unique_ptr<Layer>& layer: layerStack_)
         {
-            layer->update();
+            if (layer->IsSuspended())
+                continue;
+
+            layer->update(delta);
             dispatch_commands_in_queue(layer.get());
         }
     }
@@ -122,9 +126,7 @@ namespace Core {
         for (const auto& layer : layerStack_)
         {
             if (typeid(*layer) == typeid(T))
-            {
                 return true;
-            }
         }
         return false;
     }

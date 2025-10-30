@@ -43,7 +43,7 @@ add_executable(Pong
 		Engine/src/Core/Level/Level.h
 		Engine/src/Core/ECS/Entity/Entity.h
 		Engine/src/Core/ErrorCodes.h
-		Engine/src/Core/ECS/Components/Components.h
+		Engine/src/Core/ECS/Component/Component.h
 		Engine/src/Core/ECS/Systems/SystemManager.cpp
 		Engine/src/Core/ECS/Systems/SystemManager.h
 		Engine/src/Core/ECS/Entity/EntityManager.cpp
@@ -64,6 +64,15 @@ add_executable(Pong
 		Engine/src/Core/Layer/LayerStack.cpp
 		Engine/src/Core/Layer/LayerStack.h
 		Engine/src/Core/Layer/Layer.cpp
+		Engine/src/Core/ECS/Component/Components/Core.h
+		Engine/src/Core/ECS/Component/Components/Audio.h
+		Engine/src/Core/ECS/Component/Components/Gameplay.h
+		Engine/src/Core/ECS/Component/Components/Logic.h
+		Engine/src/Core/ECS/Component/Components/Meta.h
+		Engine/src/Core/ECS/Component/Components/Network.h
+		Engine/src/Core/ECS/Component/Components/Physics.h
+		Engine/src/Core/ECS/Component/Components/Rendering.h
+		Engine/src/Core/ECS/Component/Components/SYSTEM.h
 )
 
 target_compile_definitions(

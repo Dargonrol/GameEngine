@@ -5,7 +5,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Components/Components.h"
+#include "Component/Components/Core.h"
+#include "Component/Components/Logic.h"
 #include "Entity/Entity.h"
 #include "Systems/System.h"
 
@@ -37,8 +38,8 @@ namespace Core::ECS {
 
         std::vector<System> systems;
 
-        ComponentArray<Transform> transforms;
-        ComponentArray<Velocity> velocities;
+        ComponentArray<Components::Transform> transforms;
+        ComponentArray<Components::Velocity> velocities;
     };
 
     template<typename C>
@@ -52,9 +53,9 @@ namespace Core::ECS {
     };
 
     template<>
-    struct ComponentVector<Transform>
+    struct ComponentVector<Components::Transform>
     {
-        static ComponentArray<Transform>& get(Registry& reg) { return reg.transforms; }
+        static ComponentArray<Components::Transform>& get(Registry& reg) { return reg.transforms; }
     };
 
 }

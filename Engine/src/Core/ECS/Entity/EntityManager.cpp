@@ -24,12 +24,15 @@ namespace Core::ECS {
         size_t index = reg->entities.size() - 1;
         reg->id_to_index.emplace(id, index);
         reg->index_to_id.emplace(index, id);
+
         return id;
     }
 
     ERROR EntityManager::UnregisterEntity(const ID id) const
     {
         WITH_REGISTRY_OR_RETURN(ERROR::REGISTRY_IS_NULLPTR)
+
+
 
         const auto it_del = reg->id_to_index.find(id);
         if (it_del == reg->id_to_index.end()) return ERROR::ENTITY_UNKNOWN_ID;
@@ -140,12 +143,25 @@ namespace Core::ECS {
         reg->entity_cap = cap;
     }
 
-    void EntityManager::CollectUnregisterCommands() const {}
-    void EntityManager::CollectRegisterCommands() const {}
+    void EntityManager::CollectUnregisterCommands() const
+    {
+
+    }
+
+    void EntityManager::CollectRegisterCommands() const
+    {
+
+    }
 
     bool EntityManager::ID_exists(const ID id) const
     {
         WITH_REGISTRY_OR_RETURN(false)
         return reg->id_to_index.contains(id);
     }
+
+    bool EntityManager::EntityIsRenderable(ID id) const
+    {
+
+    }
+
 }

@@ -38,10 +38,10 @@ public:
     void suspend(); // ecs.get_every_renderabel_entity() -> issue unregister command
     void activate(); // vise versa
 
-    void onAttach();
-    void onDetach();
+    void onAttach() const;
+    void onDetach() const;
 
-    void update();
+    void update(float delta);
 
     void onEvent();
 
@@ -49,6 +49,8 @@ public:
 
     void CollectUnregisterCommands() const;
     void CollectRegisterCommands() const;
+
+    [[nodiscard]] bool IsSuspended() const { return suspended; }
 
 
 public:

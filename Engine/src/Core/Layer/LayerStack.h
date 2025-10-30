@@ -11,7 +11,7 @@ public:
     LayerStack();
     ~LayerStack();
 
-    void update() const;
+    void update(float delta) const;
 
     template<typename T>
     requires(std::is_base_of_v<Layer, T>)
@@ -21,7 +21,7 @@ public:
 
     template<typename T>
     requires(std::is_base_of_v<Layer, T>)
-    void InsertLayer(size_t index);
+    Result<void> InsertLayer(size_t index);
 
     template<typename T>
     requires(std::is_base_of_v<Layer, T>)
